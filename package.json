@@ -2,7 +2,7 @@
   "name": "@dr_chai/homebridge-bluebridge",
   "displayName": "Homebridge Bluebridge",
   "type": "module",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A central Bluetooth controller for Homebridge.",
   "author": "Ed Chai",
   "license": "Apache-2.0",
