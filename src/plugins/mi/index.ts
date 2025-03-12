@@ -1,11 +1,11 @@
 import { Peripheral } from '@abandonware/noble';
 import parse, { MiSensorData } from './parser.js';
 import MiAccessory from './accessory.js';
-import AirThingsPlatform from '@platform';
+import Platform from '@platform';
 import { PlatformAccessory } from 'homebridge';
 
 const MiThermometer: PluginProfile<MiSensorData> = {
-  keepCached: true,
+  autoRemove: true,
   readOn: 'advertising',
   name: 'mi-thermometer',
   uuid: 'fe95',
@@ -20,11 +20,11 @@ const MiThermometer: PluginProfile<MiSensorData> = {
       id: id,
       pluginName: 'mi-thermometer',
       address: address,
-      keepCached: true,
+      autoRemove: true,
       displayName: localName || 'Mi Thermometer',
     };
   },
-  newAccessory: (platform: AirThingsPlatform, accessory: PlatformAccessory) => new MiAccessory(platform, accessory),
+  newAccessory: (platform: Platform, accessory: PlatformAccessory) => new MiAccessory(platform, accessory),
 };
 
 export { MiSensorData };

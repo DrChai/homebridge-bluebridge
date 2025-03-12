@@ -6,26 +6,20 @@ If you've come across this repository, you may have noticed that the Bluetooth m
 I built this plugin to serve as a Bluetooth gateway and allow my two bluetooth devices (Mi thermometer and Airthings sensor) to be read without interference in my Raspberry Pi with single bluetooth adapter.
 
 ## The interface of bluetooth profile:
+
 A central Bluetooth instance will register all Bluetooth devices that implement the interface below. This allows for connection management and data parsing.
+
 ```typescript
 interface PluginProfile<D> {
   name: string;
-  keepCached: boolean;
+  autoRemove: boolean;
   readOn: ReadOnType;
   uuid: string;
   parse(buffer: Buffer): D;
-  validate(peripheral: import("@abandonware/noble").Peripheral): boolean;
-  context(
-    peripheral: import("@abandonware/noble").Peripheral
-  ): AccessoryContext;
-  newAccessory(
-    platform: import("homebridge").DynamicPlatformPlugin,
-    accessory: import("homebridge").PlatformAccessory
-  ): BLEAccessoryType<D>;
-  customServiceAndCharacteristics?(
-    homebridge: never,
-    config: object
-  ): CustomTypes;
+  validate(peripheral: import('@abandonware/noble').Peripheral): boolean;
+  context(peripheral: import('@abandonware/noble').Peripheral): AccessoryContext;
+  newAccessory(platform: import('homebridge').DynamicPlatformPlugin, accessory: import('homebridge').PlatformAccessory): BLEAccessoryType<D>;
+  customServiceAndCharacteristics?(homebridge: never, config: object): CustomTypes;
 }
 ```
 

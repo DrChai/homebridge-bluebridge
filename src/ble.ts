@@ -126,7 +126,7 @@ export default class {
       this.log.debug('[BLE] Runner stopped.');
       return;
     }
-    this.startScanningFor('read');
+    await this.startScanningFor('read'); //make this awaitable. RPi adapter conflict on scanning while connecting!!
     for (const context of this.discoveredDeivces.filter((context) => this.plugins[context.pluginName].readOn === 'connecting')) {
       try {
         // Wait for either getData to complete or timeout after 5 seconds

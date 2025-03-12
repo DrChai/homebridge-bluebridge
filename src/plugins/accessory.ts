@@ -1,5 +1,5 @@
 import { PlatformAccessory } from 'homebridge';
-import type AirThingsPlatform from '@platform';
+import type Platform from '@platform';
 
 export default class BLEAccessory<T> implements BLEAccessoryType<T> {
   lastData: T | undefined = undefined;
@@ -9,7 +9,7 @@ export default class BLEAccessory<T> implements BLEAccessoryType<T> {
    * You should implement your own code to track the state of your accessory
    */
 
-  constructor(protected readonly platform: AirThingsPlatform, protected readonly accessory: PlatformAccessory) {
+  constructor(protected readonly platform: Platform, protected readonly accessory: PlatformAccessory) {
     // set accessory information
     this.context = accessory.context.device;
     const infoSvc = this.accessory.getService(this.platform.Service.AccessoryInformation);

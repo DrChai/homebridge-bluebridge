@@ -1,11 +1,11 @@
 import type { API } from 'homebridge';
 
-import AirThingsPlatform from './platform.js';
+import Platform from './platform.js';
 import { PLATFORM_NAME } from './settings.js';
 
 /**
  * This method registers the platform with Homebridge
  */
 export default (api: API) => {
-  api.registerPlatform(PLATFORM_NAME, AirThingsPlatform);
+  api.registerPlatform(PLATFORM_NAME, Platform);
 };

@@ -1,7 +1,7 @@
 {
-  "pluginAlias": "AirThings",
-  "headerDisplay": "AirThings plugin for [Homebridge](https://github.com/nfarina/homebridge) using the Bluetooth(noble) only.",
-  "footerDisplay": "As of the time this plugin was implemented, [Apple HomeKit](https://developer.apple.com/documentation/homekit/characteristic-types#Air-quality-and-smoke-detection) does not recognize the Radon characteristic. To view Radon statistics, the plugin uses [SulphurDioxideDensity](https://developers.homebridge.io/#/characteristic/SulphurDioxideDensity) and [OzoneDensity](https://developers.homebridge.io/#/characteristic/OzoneDensity) to represent *Radon short-term average* and *Radon long-term average*, respectively.",
+  "pluginAlias": "Bluebridge",
+  "headerDisplay": "A central [Bluetooth controller](https://github.com/drchai/homebridge-bluebridge#readme) for Homebridge.",
+  "footerDisplay": "fork me or make a pull request for bluetooth devices you need.",
   "pluginType": "platform",
   "singular": true,
   "strictValidation": false,
@@ -25,53 +25,15 @@
           "enum": ["mi-thermometer", "airthings-wave2"]
         }
       },
-      "pluginsConfigs": {
-        "title": "Supported Plugins",
-        "type": "object",
-        "properties": {
-          "mi-thermometer": {
-            "type": "object",
-            "title": "Supported Plugins",
-            "properties": {
-              "selected": {
-                "title": "Selected",
-                "type": "boolean"
-              }
-            }
-          },
-          "airthings-wave2": {
-            "type": "object",
-            "title": "Supported Plugins",
-            "properties": {
-              "selected": {
-                "title": "Selected",
-                "type": "boolean"
-              },
-              "displayRadonSTA": {
-                "title": "Display Radon short term avg.",
-                "description": "Uses the SulphurDioxideDensity field to display Radon short-term average. Homebridge will show the correct title.",
-                "type": "boolean",
-                "default": false
-              },
-              "displayRadonLTA": {
-                "title": "Display Radon long term avg.",
-                "description": "Uses the OzoneDensity field to display Radon long-term average. Homebridge will show the correct title.",
-                "type": "boolean",
-                "default": false
-              }
-            }
-          }
-        }
-      },
       "scanTime": {
         "title": "Total scan time",
         "type": "integer",
         "default": 24,
-        "description": "Specifies the total scan time in seconds for discovering AirThings devices nearby."
+        "description": "Specifies the total scan time in seconds for discovering devices nearby."
       },
       "retryAfter": {
         "title": "Retry after delay",
-        "type": "integer",
+        "type": "integer",  
         "default": 30,
         "description": "Specifies the delay in seconds before retrying the scan."
       },
@@ -79,7 +41,19 @@
         "title": "Refresh time ",
         "type": "integer",
         "default": 3600,
-        "description": "Specifies the refresh time for sync data from all AirThings devices in seconds (default 60min)"
+        "description": "Specifies the refresh time for sync data from all devices in seconds (default 60min)"
+      },
+      "displayRadonSTA": {
+        "title": "Display Radon short term avg.",
+        "description": "Uses the SulphurDioxideDensity field to display Radon short-term average. Homebridge will show the correct title.",
+        "type": "boolean",
+        "default": false
+      },
+      "displayRadonLTA": {
+        "title": "Display Radon long term avg.",
+        "description": "Uses the OzoneDensity field to display Radon long-term average. Homebridge will show the correct title.",
+        "type": "boolean",
+        "default": false
       }
     }
   },
@@ -103,6 +77,17 @@
       "items": [
         {
           "items": ["scanTime", "retryAfter", "refreshTime"]
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "title": "AirThings Settings",
+      "expandable": true,
+      "expanded": false,
+      "items": [
+        {
+          "items": ["displayRadonSTA", "displayRadonLTA"]
         }
       ]
     }

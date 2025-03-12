@@ -1,6 +1,6 @@
 import { PlatformAccessory, Service } from 'homebridge';
 
-import type AirThingsPlatform from '@platform';
+import type Platform from '@platform';
 import BLEAccessory from '../accessory.js';
 /**
  * Platform Accessory
@@ -18,7 +18,7 @@ export default class Wave2Accessory extends BLEAccessory<WAVE2> {
    * You should implement your own code to track the state of your accessory
    */
 
-  constructor(platform: AirThingsPlatform, accessory: PlatformAccessory) {
+  constructor(platform: Platform, accessory: PlatformAccessory) {
     // set accessory information
     super(platform, accessory);
     const { displayRadonSTA, displayRadonLTA } = this.platform.config;
@@ -33,9 +33,9 @@ export default class Wave2Accessory extends BLEAccessory<WAVE2> {
 
     // set the service name, this is what is displayed as the default name on the Home app
     // in this example we are using the name we stored in the `accessory.context` in the `discoverDevices` method.
-    this.RadonSvc.setCharacteristic(this.platform.Characteristic.Name, `Airthings Radon ${accessory.context.device.id}`);
-    this.TempSvc.setCharacteristic(this.platform.Characteristic.Name, `Airthings Temperature ${accessory.context.device.id}`);
-    this.HumiditySvc.setCharacteristic(this.platform.Characteristic.Name, `Airthings Humidity ${accessory.context.device.id}`);
+    this.RadonSvc.setCharacteristic(this.platform.Characteristic.Name, `Airthings Radon ${this.context.sn}`);
+    this.TempSvc.setCharacteristic(this.platform.Characteristic.Name, `Airthings Temperature ${this.context.sn}`);
+    this.HumiditySvc.setCharacteristic(this.platform.Characteristic.Name, `Airthings Humidity ${this.context.sn}`);
 
     // register handlers for the On/Off Characteristic
     this.TempSvc.getCharacteristic(this.platform.Characteristic.CurrentTemperature).onGet(this.getAttr('temperature'));
@@ -81,7 +81,7 @@ export default class Wave2Accessory extends BLEAccessory<WAVE2> {
       }
       this.TempSvc.updateCharacteristic(this.platform.Characteristic.CurrentTemperature, data?.temperature || 0);
       this.HumiditySvc.updateCharacteristic(this.platform.Characteristic.CurrentRelativeHumidity, data?.humidity || 0);
-      this.platform.log.debug('Refreshing AirThingsPlatform:', data);
+      this.platform.log.debug('Refreshing AirThings Wave2:', data);
       this.lastData = data;
     }, this.platform.config.refreshTime * 1000);
   }

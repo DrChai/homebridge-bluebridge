@@ -7,7 +7,7 @@ import { PluginsIndex, PluginName } from './plugins/index.js';
  * This class is the main constructor for your plugin, this is where you should
  * parse the user config and discover/register accessories with Homebridge.
  */
-export default class AirThingsPlatform implements DynamicPlatformPlugin {
+export default class BluebridgePlatform implements DynamicPlatformPlugin {
   public readonly Service: typeof Service;
   public readonly Characteristic: typeof Characteristic;
 
@@ -135,7 +135,7 @@ export default class AirThingsPlatform implements DynamicPlatformPlugin {
     // for example, if your plugin logs into a cloud account to retrieve a device list, and a user has previously removed a device
     // from this cloud account, then this device will no longer be present in the device list but will still be in the Homebridge cache
     for (const [uuid, accessory] of this.accessories) {
-      if (!this.discoveredCacheUUIDs.includes(uuid)) {
+      if (!this.plugins[accessory.context.device.pluginName] || (!this.discoveredCacheUUIDs.includes(uuid) && !!accessory.context.device.autoRemove)) {
         this.log.info('Removing existing accessory from cache:', accessory.displayName);
         this.api.unregisterPlatformAccessories(PLUGIN_NAME, PLATFORM_NAME, [accessory]);
       }

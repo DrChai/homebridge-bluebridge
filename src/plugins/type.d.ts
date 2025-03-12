@@ -11,7 +11,7 @@ interface CustomTypes {
 
 interface PluginProfile<D> {
   name: string;
-  keepCached: boolean;
+  autoRemove: boolean;
   readOn: ReadOnType;
   uuid: string;
   parse(buffer: Buffer): D;

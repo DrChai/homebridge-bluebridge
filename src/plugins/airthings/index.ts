@@ -1,7 +1,7 @@
 import { Peripheral } from '@abandonware/noble';
 import { parseWave2Rawdata, parseSerial } from './parser.js';
 import Wave2Accessory from './accessory.js';
-import AirThingsPlatform from '../../platform.js';
+import Platform from '@platform';
 import { PlatformAccessory } from 'homebridge';
 import AirthingsTypes from './customCharacteristics.js';
 
@@ -10,7 +10,7 @@ type AirthingsConfig = {
   displayRadonLTA?: boolean;
 };
 const AirthingsWave2: PluginProfile<WAVE2> = {
-  keepCached: true,
+  autoRemove: true,
   readOn: 'connecting',
   name: 'airthings-wave2',
   uuid: 'b42e4dccade711e489d3123b93f75cba',
@@ -28,10 +28,10 @@ const AirthingsWave2: PluginProfile<WAVE2> = {
       pluginName: 'airthings-wave2',
       address,
       id,
-      displayName: localName || 'Default',
+      displayName: localName || 'Airthings Wave2',
     };
   },
-  newAccessory: (platform: AirThingsPlatform, accessory: PlatformAccessory) => new Wave2Accessory(platform, accessory),
+  newAccessory: (platform: Platform, accessory: PlatformAccessory) => new Wave2Accessory(platform, accessory),
   customServiceAndCharacteristics: (homebridge, config) => {
     const { displayRadonSTA, displayRadonLTA } = config as AirthingsConfig;
     return new AirthingsTypes(homebridge, displayRadonSTA, displayRadonLTA);

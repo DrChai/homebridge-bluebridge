@@ -13,8 +13,6 @@ interface AccessoryContext {
   displayName: string;
   id: string;
   address: string;
-  keepCached?: boolean;
+  autoRemove?: boolean;
   pluginName: string;
 }
-
-
