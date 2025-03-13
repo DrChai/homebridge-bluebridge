@@ -59,12 +59,14 @@ export default class {
     });
     noble.on('discover', this.sensorStartDiscovery);
     this.startScanning = () => {
-      this.isScanning = true;
-      noble.startScanning([], true);
+      noble.startScanning([], true, () => {
+        this.isScanning = true;
+      });
     };
     this.stopScanning = () => {
-      this.isScanning = false;
-      noble.stopScanning();
+      noble.stopScanning(() => {
+        this.isScanning = false;
+      });
     };
   }
 

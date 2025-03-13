@@ -135,9 +135,15 @@ export default class BluebridgePlatform implements DynamicPlatformPlugin {
     // for example, if your plugin logs into a cloud account to retrieve a device list, and a user has previously removed a device
     // from this cloud account, then this device will no longer be present in the device list but will still be in the Homebridge cache
     for (const [uuid, accessory] of this.accessories) {
-      if (!this.plugins[accessory.context.device.pluginName] || (!this.discoveredCacheUUIDs.includes(uuid) && !!accessory.context.device.autoRemove)) {
+      const isDiscovered = this.discoveredCacheUUIDs.includes(uuid);
+      const enabledPlugin = this.plugins[accessory.context.device.pluginName];
+      const shouldRemove = !enabledPlugin || (!isDiscovered && accessory.context.device.autoRemove);
+
+      if (shouldRemove) {
         this.log.info('Removing existing accessory from cache:', accessory.displayName);
         this.api.unregisterPlatformAccessories(PLUGIN_NAME, PLATFORM_NAME, [accessory]);
+      } else if (!isDiscovered) {
+        this.plugins[accessory.context.device.pluginName].newAccessory(this, accessory);
       }
     }
     this.scanner.startRunner();
