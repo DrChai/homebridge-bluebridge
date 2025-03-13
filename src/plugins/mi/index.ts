@@ -20,7 +20,7 @@ const MiThermometer: PluginProfile<MiSensorData> = {
       id: id,
       pluginName: 'mi-thermometer',
       address: address,
-      autoRemove: true,
+      autoRemove: false,
       displayName: localName || 'Mi Thermometer',
     };
   },
