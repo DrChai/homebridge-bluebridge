@@ -183,6 +183,9 @@ export default class {
 
   disconnect = async (peripheral: Peripheral) => {
     await Promise.race([sleep(1000 * 5), peripheral.disconnectAsync()]);
+    if (this.isScanning) {
+      this.stopScanning();
+    }
   };
   // Method to stop the runner
   stop = () => {
