@@ -26,12 +26,18 @@ export default class MiAccessory extends BLEAccessory<AccesoryData> {
 
     setInterval(() => {
       const data = this.platform.scanner.lastData.get(this.context.id) as AccesoryData;
+      const { temperature, humidity, battery, lastUpdateAt } = data;
       if (data) {
-        if (this.lastData?.battery !== data?.battery) {
-          this.BatterySvc.updateCharacteristic(this.platform.Characteristic.BatteryLevel, data.battery);
+        if (battery && this.lastData?.battery !== battery) {
+          this.BatterySvc.updateCharacteristic(this.platform.Characteristic.BatteryLevel, battery);
         }
-        this.TempSvc.updateCharacteristic(this.platform.Characteristic.CurrentTemperature, data.temperature);
-        this.HumiditySvc.updateCharacteristic(this.platform.Characteristic.CurrentRelativeHumidity, data.humidity);
+        if (temperature && humidity) {
+          this.TempSvc.updateCharacteristic(this.platform.Characteristic.CurrentTemperature, temperature);
+          this.HumiditySvc.updateCharacteristic(this.platform.Characteristic.CurrentRelativeHumidity, humidity);
+        }
+        const isActive = Date.now() / 1000 - lastUpdateAt / 1000 < 2 * 3600;
+        this.TempSvc.updateCharacteristic(this.platform.Characteristic.StatusActive, isActive);
+        this.HumiditySvc.updateCharacteristic(this.platform.Characteristic.StatusActive, isActive);
       }
       this.platform.log.debug('Refreshing MiAccessory:', data);
       this.lastData = data;

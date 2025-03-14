@@ -5,7 +5,7 @@ import Platform from '@platform';
 import { PlatformAccessory } from 'homebridge';
 
 const MiThermometer: PluginProfile<MiSensorData> = {
-  autoRemove: true,
+  autoRemove: false,
   readOn: 'advertising',
   name: 'mi-thermometer',
   uuid: 'fe95',

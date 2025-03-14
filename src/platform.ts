@@ -140,7 +140,7 @@ export default class BluebridgePlatform implements DynamicPlatformPlugin {
       const shouldRemove = !enabledPlugin || (!isDiscovered && accessory.context.device.autoRemove);
 
       if (shouldRemove) {
-        this.log.info('Removing existing accessory from cache:', accessory.displayName);
+        this.log.info(`Removing existing accessory from cache:${accessory.displayName}`, accessory.context.device);
         this.api.unregisterPlatformAccessories(PLUGIN_NAME, PLATFORM_NAME, [accessory]);
       } else if (!isDiscovered) {
         this.plugins[accessory.context.device.pluginName].newAccessory(this, accessory);
